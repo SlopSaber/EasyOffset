@@ -11,18 +11,43 @@ internal static class VRControllerGetControllerOffsetPatch {
             new[] {
                 typeof(IVRPlatformHelper),
                 typeof(VRControllerTransformOffset),
-                typeof(XRNode).MakeByRefType(),
+                typeof(XRNode),
                 typeof(Pose).MakeByRefType()
             }
         );
+        var prefix = AccessTools.Method(typeof(VRControllerGetControllerOffsetPatch), nameof(PrefixCurrent));
 
-        var prefix = AccessTools.Method(typeof(VRControllerGetControllerOffsetPatch),nameof(Prefix));
+        if (targetMethod == null) {
+            targetMethod = AccessTools.Method(typeof(VRController), "TryGetControllerOffset",
+                new[] {
+                    typeof(IVRPlatformHelper),
+                    typeof(VRControllerTransformOffset),
+                    typeof(XRNode).MakeByRefType(),
+                    typeof(Pose).MakeByRefType()
+                }
+            );
+            prefix = AccessTools.Method(typeof(VRControllerGetControllerOffsetPatch), nameof(PrefixLegacy));
+        }
+
+        if (targetMethod == null || prefix == null)
+            return;
 
         harmony.Patch(targetMethod, new HarmonyMethod(prefix));
     }
 
     [UsedImplicitly]
-    private static bool Prefix(
+    private static bool PrefixCurrent(
+        IVRPlatformHelper vrPlatformHelper,
+        VRControllerTransformOffset transformOffset,
+        XRNode node,
+        out Pose poseOffset
+    ) {
+        poseOffset = Pose.identity;
+        return PluginConfig.IsDeviceless && !PluginConfig.EnabledForDeviceless;
+    }
+
+    [UsedImplicitly]
+    private static bool PrefixLegacy(
         IVRPlatformHelper vrPlatformHelper,
         VRControllerTransformOffset transformOffset,
         ref XRNode node,
