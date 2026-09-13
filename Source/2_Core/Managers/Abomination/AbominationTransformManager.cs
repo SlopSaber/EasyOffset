@@ -42,11 +42,6 @@ namespace EasyOffset {
                 rightHandRot = Abomination.RightControllerTransform.Rotation;
             }
 
-            if (_vrPlatformHelper.vrPlatformSDK == VRPlatformSDK.Oculus) {
-                TransformUtils.RemoveOculusModeOffsets(ref leftHandPos, ref leftHandRot);
-                TransformUtils.RemoveOculusModeOffsets(ref rightHandPos, ref rightHandRot);
-            }
-
             Abomination.UpdateTransforms(leftHandPos, leftHandRot, rightHandPos, rightHandRot);
         }
     }

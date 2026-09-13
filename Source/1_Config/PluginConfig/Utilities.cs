@@ -16,11 +16,7 @@ public static partial class PluginConfig {
         get => _vrPlatformHelper;
         set {
             _vrPlatformHelper = value;
-            IsDeviceless = value.vrPlatformSDK switch {
-                VRPlatformSDK.OpenXR => false,
-                VRPlatformSDK.Oculus => false,
-                _ => true
-            };
+            IsDeviceless = value == null;
             VRPlatformHelperChangedEvent?.Invoke(value);
         }
     }
@@ -72,7 +68,6 @@ public static partial class PluginConfig {
     }
 
     private static void ApplyControllerSettings() {
-        VRPlatformHelper?.RefreshControllersReference();
     }
 
     #endregion

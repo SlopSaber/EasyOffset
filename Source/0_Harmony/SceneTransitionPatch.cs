@@ -11,7 +11,7 @@ namespace EasyOffset;
 internal static class SceneTransitionPatch {
     [UsedImplicitly]
     private static void Prefix(
-        ScenesTransitionSetupDataSO newScenesTransitionSetupData,
+        ScenesTransitionSetupData newScenesTransitionSetupData,
         IReadOnlyList<string> scenesToPresent,
         ScenePresentType presentType,
         IReadOnlyList<string> scenesToDismiss,

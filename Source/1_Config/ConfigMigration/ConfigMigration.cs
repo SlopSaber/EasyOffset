@@ -23,7 +23,7 @@ namespace EasyOffset {
 
         private static void OnVRPlatformHelperChanged(IVRPlatformHelper vrPlatformHelper) {
             _vrPlatformHelper = vrPlatformHelper;
-            IsMigrationPossible = _vrPlatformHelper is UnityXRHelper or OculusVRHelper;
+            IsMigrationPossible = _vrPlatformHelper is UnityXRHelper;
         }
 
         #endregion
