@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
 
 namespace EasyOffset {
@@ -23,21 +22,24 @@ namespace EasyOffset {
         #region Deviation
 
         public static float GetDeviationFromPoint(this WeightedList<Vector3> list, Vector3 point) {
-            var meanSquareDeviation = list.Entries
-                .Select(entry => (entry.Value - point).magnitude)
-                .Select(distance => Mathf.Pow(distance, 2))
-                .Average();
+            if (list.Entries.Count == 0) throw new InvalidOperationException("Sequence contains no elements");
+            var sum = 0f;
+            foreach (var entry in list.Entries) {
+                sum += (entry.Value - point).sqrMagnitude;
+            }
 
-            return Mathf.Sqrt(meanSquareDeviation);
+            return Mathf.Sqrt(sum / list.Entries.Count);
         }
 
         public static float GetDeviationFromPlane(this WeightedList<Vector3> list, Plane plane) {
-            var meanSquareDeviation = list.Entries
-                .Select(entry => plane.GetDistanceToPoint(entry.Value))
-                .Select(distance => Mathf.Pow(distance, 2))
-                .Average();
+            if (list.Entries.Count == 0) throw new InvalidOperationException("Sequence contains no elements");
+            var sum = 0f;
+            foreach (var entry in list.Entries) {
+                var distance = plane.GetDistanceToPoint(entry.Value);
+                sum += distance * distance;
+            }
 
-            return Mathf.Sqrt(meanSquareDeviation);
+            return Mathf.Sqrt(sum / list.Entries.Count);
         }
 
         #endregion
@@ -47,12 +49,14 @@ namespace EasyOffset {
         public static Plane CalculatePlane(this WeightedList<Vector3> list, Vector3 initialNormal) {
             var averagePoint = list.GetAverage();
 
-            var convergenceMatrix = list.Entries
-                .Select(entry => (entry.Value - averagePoint))
-                .Select(relative3 => new Vector4(relative3.x, relative3.y, relative3.z, 1))
-                .Select(relative4 => MathUtils.GetOuterProduct(relative4, relative4))
-                .Aggregate(Matrix4x4.zero, MathUtils.MatrixSum)
-                .inverse;
+            var covariance = Matrix4x4.zero;
+            foreach (var entry in list.Entries) {
+                var relative3 = entry.Value - averagePoint;
+                var relative4 = new Vector4(relative3.x, relative3.y, relative3.z, 1);
+                covariance = MathUtils.MatrixSum(covariance, MathUtils.GetOuterProduct(relative4, relative4));
+            }
+
+            var convergenceMatrix = covariance.inverse;
 
             Vector4 normal = initialNormal;
 
@@ -76,103 +80,77 @@ namespace EasyOffset {
             out float maxAngle
         ) {
             var inverseRotation = Quaternion.Inverse(rotation);
+            var entries = list.Entries;
+            if (entries.Count == 0) throw new InvalidOperationException("Sequence contains no elements");
 
-            var swingData = list.Entries
-                .Select(entry => inverseRotation * (entry.Value - origin))
-                .Select(localPosition => Mathf.Atan2(localPosition.y, localPosition.x))
-                .ToArray();
-
-            AnalyzeSwingData(
-                swingData,
-                out var absoluteMinimumAngle,
-                out var absoluteMaximumAngle,
-                out var localMinimums,
-                out var localMaximums
-            );
-
-            var angleMargin = Mathf.Abs(absoluteMaximumAngle - absoluteMinimumAngle) / 6;
-            minAngle = GetAverageAngle(localMinimums, absoluteMinimumAngle, angleMargin);
-            maxAngle = GetAverageAngle(localMaximums, absoluteMaximumAngle, angleMargin);
-        }
-
-        private static float GetAverageAngle(
-            IEnumerable<float> angles,
-            float filterAnchor,
-            float filterMargin
-        ) {
-            var sum = 0f;
-            var num = 0;
-
-            foreach (var angle in angles) {
-                var difference = Mathf.Abs(angle - filterAnchor);
-                if (difference > filterMargin) continue;
-
-                sum += angle;
-                num += 1;
+            float AngleAt(int index) {
+                var localPosition = inverseRotation * (entries[index].Value - origin);
+                return Mathf.Atan2(localPosition.y, localPosition.x);
             }
 
-            return (num > 0) ? sum / num : 0f;
-        }
+            var firstAngle = AngleAt(0);
+            var absoluteMinimumAngle = firstAngle;
+            var absoluteMaximumAngle = firstAngle;
+            for (var i = 1; i < entries.Count; i++) {
+                var angle = AngleAt(i);
+                if (angle < absoluteMinimumAngle) absoluteMinimumAngle = angle;
+                if (angle > absoluteMaximumAngle) absoluteMaximumAngle = angle;
+            }
 
-        private static void AnalyzeSwingData(
-            float[] swingData,
-            out float minimalSwingAngle,
-            out float maximalSwingAngle,
-            out List<float> localMinimums,
-            out List<float> localMaximums
-        ) {
-            localMinimums = new List<float>();
-            localMaximums = new List<float>();
-            minimalSwingAngle = 0f;
-            maximalSwingAngle = 0f;
-
-            var previousAngle = 0f;
-            var isPreviousDirectionPositive = false;
+            var margin = Mathf.Abs(absoluteMaximumAngle - absoluteMinimumAngle) / 6;
+            var previousAngle = firstAngle;
+            var previousDirectionPositive = false;
             var hasPreviousDirection = false;
+            var localMinimumCount = 0;
+            var localMaximumCount = 0;
+            var minimumSum = 0f;
+            var maximumSum = 0f;
+            var minimumSamples = 0;
+            var maximumSamples = 0;
 
-            var count = 0;
-            foreach (var angle in swingData) {
-                if (count++ == 0) {
-                    minimalSwingAngle = angle;
-                    maximalSwingAngle = angle;
-                    localMinimums.Add(angle);
-                    localMaximums.Add(angle);
-                    previousAngle = angle;
-                } else {
-                    if (angle > maximalSwingAngle) maximalSwingAngle = angle;
-                    if (angle < minimalSwingAngle) minimalSwingAngle = angle;
-
-                    var angularVelocity = angle - previousAngle;
-                    var isDirectionPositive = angularVelocity >= 0;
-
-                    if (hasPreviousDirection && isDirectionPositive != isPreviousDirectionPositive) {
-                        if (isPreviousDirectionPositive) {
-                            localMaximums.Add(previousAngle);
-                        } else {
-                            localMinimums.Add(previousAngle);
+            for (var i = 1; i < entries.Count; i++) {
+                var angle = AngleAt(i);
+                var directionPositive = angle - previousAngle >= 0;
+                if (hasPreviousDirection && directionPositive != previousDirectionPositive) {
+                    if (previousDirectionPositive) {
+                        localMaximumCount++;
+                        if (!(Mathf.Abs(previousAngle - absoluteMaximumAngle) > margin)) {
+                            maximumSum += previousAngle;
+                            maximumSamples++;
+                        }
+                    } else {
+                        localMinimumCount++;
+                        if (!(Mathf.Abs(previousAngle - absoluteMinimumAngle) > margin)) {
+                            minimumSum += previousAngle;
+                            minimumSamples++;
                         }
                     }
-
-                    hasPreviousDirection = true;
-                    previousAngle = angle;
-                    isPreviousDirectionPositive = isDirectionPositive;
                 }
+
+                hasPreviousDirection = true;
+                previousDirectionPositive = directionPositive;
+                previousAngle = angle;
             }
 
-            if (localMaximums.Count > 1) localMaximums.RemoveAt(0);
-            if (localMinimums.Count > 1) localMinimums.RemoveAt(0);
-
-            var lastAngle = swingData.Last();
-
-            if (lastAngle >= maximalSwingAngle) {
-                maximalSwingAngle = lastAngle;
-                localMaximums.Add(lastAngle);
+            if (localMinimumCount == 0 && !(Mathf.Abs(firstAngle - absoluteMinimumAngle) > margin)) {
+                minimumSum += firstAngle;
+                minimumSamples++;
+            }
+            if (localMaximumCount == 0 && !(Mathf.Abs(firstAngle - absoluteMaximumAngle) > margin)) {
+                maximumSum += firstAngle;
+                maximumSamples++;
+            }
+            if (previousAngle <= absoluteMinimumAngle) {
+                minimumSum += previousAngle;
+                minimumSamples++;
+            }
+            if (previousAngle >= absoluteMaximumAngle) {
+                maximumSum += previousAngle;
+                maximumSamples++;
             }
 
-            if (lastAngle <= minimalSwingAngle) {
-                minimalSwingAngle = lastAngle;
-                localMinimums.Add(lastAngle);
-            }
+            minAngle = minimumSamples > 0 ? minimumSum / minimumSamples : 0f;
+            maxAngle = maximumSamples > 0 ? maximumSum / maximumSamples : 0f;
         }
 
         #endregion

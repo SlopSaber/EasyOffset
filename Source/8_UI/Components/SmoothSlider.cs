@@ -21,6 +21,12 @@ internal class SmoothSlider : ReeUIComponentV2 {
 
     protected override void OnDispose() {
         UnsetValue();
+        if (_buttonEventsReady) {
+            _incrementButton.onClick.RemoveListener(OnButtonClick);
+            _decrementButton.onClick.RemoveListener(OnButtonClick);
+        }
+        if (_leftArrowMaterial != null) Destroy(_leftArrowMaterial);
+        if (_rightArrowMaterial != null) Destroy(_rightArrowMaterial);
     }
 
     #endregion

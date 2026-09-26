@@ -36,6 +36,7 @@ internal class VideoRenderer : MonoBehaviour {
 
     private void OnDestroy() {
         DisposeTexture();
+        if (_materialInstance != null) Destroy(_materialInstance);
     }
 
     #endregion
@@ -57,7 +58,10 @@ internal class VideoRenderer : MonoBehaviour {
 
     private void DisposeTexture() {
         if (_outputTexture == null) return;
+        _videoPlayer.targetTexture = null;
+        _materialInstance.SetTexture(VideoTexturePropertyID, null);
         _outputTexture.Release();
+        Destroy(_outputTexture);
         _outputTexture = null;
     }
 

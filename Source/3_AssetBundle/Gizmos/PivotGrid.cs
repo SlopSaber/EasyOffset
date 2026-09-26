@@ -41,6 +41,12 @@ namespace EasyOffset {
             InstantiatePlanes();
         }
 
+        private void OnDestroy() {
+            if (_materialInstanceXY != null) Destroy(_materialInstanceXY);
+            if (_materialInstanceXZ != null) Destroy(_materialInstanceXZ);
+            if (_materialInstanceYZ != null) Destroy(_materialInstanceYZ);
+        }
+
         private void InstantiateMaterials() {
             _materialInstanceXY = InstantiateMaterial(materialXY, _step);
             _materialInstanceXZ = InstantiateMaterial(materialXZ, _step);

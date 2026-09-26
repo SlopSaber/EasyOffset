@@ -72,6 +72,7 @@ internal class UndoRedoButtons : ReeUIComponentV2 {
 
         private void OnDestroy() {
             _ready = false;
+            if (_materialInstance != null) Destroy(_materialInstance);
         }
 
         public void Play() {

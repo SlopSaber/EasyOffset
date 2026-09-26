@@ -34,6 +34,11 @@ namespace EasyOffset {
             UpdateMaterials();
         }
 
+        private void OnDestroy() {
+            if (_gimbalRingXMaterialInstance != null) Destroy(_gimbalRingXMaterialInstance);
+            if (_gimbalRingYMaterialInstance != null) Destroy(_gimbalRingYMaterialInstance);
+        }
+
         #endregion
 
         #region UpdateMaterials

@@ -38,11 +38,15 @@ namespace EasyOffset {
             _ready = true;
         }
 
+        private void OnDestroy() {
+            if (_materialInstance != null) Destroy(_materialInstance);
+        }
+
         #endregion
 
         #region Update
 
-        private void Update() {
+        private void UpdateRotation() {
             var rotation = _direction == Vector3.zero ? Quaternion.identity : Quaternion.LookRotation(_direction, _lookDirection);
             planeTransform.rotation = rotation;
         }
@@ -73,6 +77,7 @@ namespace EasyOffset {
             _fromPosition = from;
             _toPosition = to;
             _direction = relative.normalized;
+            UpdateRotation();
 
             var planePosition = from - _direction * lineMargin;
             var planeLength = distance + lineMargin * 2;
@@ -99,6 +104,7 @@ namespace EasyOffset {
             Vector3 lookAt
         ) {
             _lookDirection = lookAt - _fromPosition;
+            UpdateRotation();
             indicatorText.SetLookAt(lookAt);
         }
 

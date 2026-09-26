@@ -32,6 +32,10 @@ namespace EasyOffset {
             pointMeshRenderer.material = _materialInstance;
         }
 
+        private void OnDestroy() {
+            if (_materialInstance != null) Destroy(_materialInstance);
+        }
+
         #endregion
 
         #region Update

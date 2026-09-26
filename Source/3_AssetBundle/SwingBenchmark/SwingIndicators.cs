@@ -42,6 +42,10 @@ namespace EasyOffset {
             _ready = true;
         }
 
+        private void OnDestroy() {
+            if (_materialInstance != null) Destroy(_materialInstance);
+        }
+
         #endregion
 
         #region Update

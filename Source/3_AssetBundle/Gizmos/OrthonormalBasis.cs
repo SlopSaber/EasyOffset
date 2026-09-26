@@ -57,6 +57,13 @@ namespace EasyOffset {
             _isReady = true;
         }
 
+        private void OnDestroy() {
+            if (_pointerMaterialInstance != null) Destroy(_pointerMaterialInstance);
+            if (_xArrowMaterialInstance != null) Destroy(_xArrowMaterialInstance);
+            if (_yArrowMaterialInstance != null) Destroy(_yArrowMaterialInstance);
+            if (_zArrowMaterialInstance != null) Destroy(_zArrowMaterialInstance);
+        }
+
         #endregion
 
         #region Update
