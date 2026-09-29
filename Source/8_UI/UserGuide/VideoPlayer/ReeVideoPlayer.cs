@@ -10,10 +10,10 @@ internal class ReeVideoPlayer : ReeUIComponentV2, IWebRequestHandler<string> {
     #region Components
 
     [UIComponent("hover-area"), UsedImplicitly]
-    private RectTransform _hoverArea;
+    private RectTransform _hoverArea = default;
 
     [UIComponent("screen"), UsedImplicitly]
-    private ImageView _screen;
+    private ImageView _screen = default;
 
     [UIValue("download-progress"), UsedImplicitly]
     private DownloadProgress _downloadProgress;

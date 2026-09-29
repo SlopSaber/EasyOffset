@@ -101,7 +101,7 @@ internal class SwingBenchmarkPanel : ReeUIComponentV2 {
     #region Instructions
 
     [UIValue("benchmark-guide")] [UsedImplicitly]
-    private string _benchmarkGuide = "Repeat one exact swing several times" +
+    private string _benchmarkGuide { get; } = "Repeat one exact swing several times" +
                                      "\nwhile holding the button" +
                                      "\n" +
                                      "\nAt least 140° swing angle is required";
@@ -131,7 +131,7 @@ internal class SwingBenchmarkPanel : ReeUIComponentV2 {
     #region Curve
 
     [UIValue("benchmark-curve-hint")] [UsedImplicitly]
-    private string _benchmarkCurveHint = "Deviation from the straight swing" +
+    private string _benchmarkCurveHint { get; } = "Deviation from the straight swing" +
                                          "\n" +
                                          "\nDepends only on your config";
 
@@ -152,7 +152,7 @@ internal class SwingBenchmarkPanel : ReeUIComponentV2 {
     #region TipWobble
 
     [UIValue("benchmark-tip-wobble-hint")] [UsedImplicitly]
-    private string _benchmarkTipWobbleHint = "Aim deviation" +
+    private string _benchmarkTipWobbleHint { get; } = "Aim deviation" +
                                              "\n" +
                                              "\nDepends on your grip and skill";
 
@@ -173,7 +173,7 @@ internal class SwingBenchmarkPanel : ReeUIComponentV2 {
     #region ArmUsage
 
     [UIValue("benchmark-arm-usage-hint")] [UsedImplicitly]
-    private string _benchmarkArmUsageHint = "Arm movement amount" +
+    private string _benchmarkArmUsageHint { get; } = "Arm movement amount" +
                                             "\n" +
                                             "\nPersonal preference";
 
@@ -194,7 +194,7 @@ internal class SwingBenchmarkPanel : ReeUIComponentV2 {
     #region Angle
 
     [UIValue("benchmark-angle-hint")] [UsedImplicitly]
-    private string _benchmarkAmplitudeHint = "Full swing angle (Backhand/Forehand)";
+    private string _benchmarkAmplitudeHint { get; } = "Full swing angle (Backhand/Forehand)";
 
     private string _benchmarkAngleText = "150° (70°/80°)";
 

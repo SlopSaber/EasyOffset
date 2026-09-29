@@ -1,16 +1,16 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 
 namespace EasyOffset {
     public class IndicatorText : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private TextMeshPro textMesh;
-        [SerializeField] private RectTransform textTransform;
-        [SerializeField] private Transform lineTransform;
-        [SerializeField] private Transform originTransform;
+        [SerializeField] private TextMeshPro textMesh = default;
+        [SerializeField] private RectTransform textTransform = default;
+        [SerializeField] private Transform lineTransform = default;
+        [SerializeField] private Transform originTransform = default;
         [SerializeField] private float lineThickness = 1.0f;
-        [SerializeField] private float lineMargin;
+        [SerializeField] private float lineMargin = default;
 
         #endregion
 

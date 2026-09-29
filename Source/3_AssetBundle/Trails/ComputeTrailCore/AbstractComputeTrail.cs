@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace EasyOffset {
     internal abstract class AbstractComputeTrail : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private ComputeShader library;
-        [SerializeField] private MeshFilter meshFilter;
-        [SerializeField] private MeshRenderer meshRenderer;
+        [SerializeField] private ComputeShader library = default;
+        [SerializeField] private MeshFilter meshFilter = default;
+        [SerializeField] private MeshRenderer meshRenderer = default;
         [SerializeField] private int horizontalResolution = 1;
         [SerializeField] private int verticalResolution = 10;
         [SerializeField] private int trailLength = 20;

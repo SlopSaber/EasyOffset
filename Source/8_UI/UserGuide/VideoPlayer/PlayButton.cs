@@ -69,10 +69,10 @@ internal class PlayButton : ReeUIComponentV2 {
     #region Button
 
     [UIComponent("container-component"), UsedImplicitly]
-    private RectTransform _container;
+    private RectTransform _container = default;
 
     [UIComponent("image-component"), UsedImplicitly]
-    private ClickableImage _button;
+    private ClickableImage _button = default;
 
     private SmoothHoverController _hoverController;
 

@@ -1,21 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace EasyOffset {
     public class PivotGrid : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Material materialXY;
-        [SerializeField] private Material materialXZ;
-        [SerializeField] private Material materialYZ;
+        [SerializeField] private Material materialXY = default;
+        [SerializeField] private Material materialXZ = default;
+        [SerializeField] private Material materialYZ = default;
 
-        [SerializeField] private GameObject prefabXY;
-        [SerializeField] private GameObject prefabXZ;
-        [SerializeField] private GameObject prefabYZ;
+        [SerializeField] private GameObject prefabXY = default;
+        [SerializeField] private GameObject prefabXZ = default;
+        [SerializeField] private GameObject prefabYZ = default;
 
-        [SerializeField] private Transform target;
+        [SerializeField] private Transform target = default;
 
-        [SerializeField] private float scale;
-        [SerializeField] private int resolution;
+        [SerializeField] private float scale = default;
+        [SerializeField] private int resolution = default;
 
         #endregion
 

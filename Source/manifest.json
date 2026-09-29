@@ -1,11 +1,11 @@
-﻿{
+{
   "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
   "id": "EasyOffset",
   "name": "EasyOffset",
   "author": "Reezonate",
   "version": "2.1.16",
   "description": "Easy controller offset adjustment tool",
-  "gameVersion": "1.45.1",
+  "gameVersion": "1.45.2",
   "dependsOn": {
     "BSIPA": "^4.3.5",
     "BeatSaberMarkupLanguage": "^1.12.5",

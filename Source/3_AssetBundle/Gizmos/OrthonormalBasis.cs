@@ -1,27 +1,27 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 
 namespace EasyOffset {
     public class OrthonormalBasis : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Transform pointerTransform;
-        [SerializeField] private GameObject axlesVisuals;
-        [SerializeField] private GameObject pointerVisuals;
-        [SerializeField] private TextMeshPro textMesh;
-        [SerializeField] private Transform textRoot;
+        [SerializeField] private Transform pointerTransform = default;
+        [SerializeField] private GameObject axlesVisuals = default;
+        [SerializeField] private GameObject pointerVisuals = default;
+        [SerializeField] private TextMeshPro textMesh = default;
+        [SerializeField] private Transform textRoot = default;
 
-        [SerializeField] private Material pointerMaterial;
-        [SerializeField] private MeshRenderer pointerMeshRenderer;
+        [SerializeField] private Material pointerMaterial = default;
+        [SerializeField] private MeshRenderer pointerMeshRenderer = default;
 
-        [SerializeField] private Material xArrowMaterial;
-        [SerializeField] private MeshRenderer xArrowMeshRenderer;
+        [SerializeField] private Material xArrowMaterial = default;
+        [SerializeField] private MeshRenderer xArrowMeshRenderer = default;
 
-        [SerializeField] private Material yArrowMaterial;
-        [SerializeField] private MeshRenderer yArrowMeshRenderer;
+        [SerializeField] private Material yArrowMaterial = default;
+        [SerializeField] private MeshRenderer yArrowMeshRenderer = default;
 
-        [SerializeField] private Material zArrowMaterial;
-        [SerializeField] private MeshRenderer zArrowMeshRenderer;
+        [SerializeField] private Material zArrowMaterial = default;
+        [SerializeField] private MeshRenderer zArrowMeshRenderer = default;
 
         #endregion
 

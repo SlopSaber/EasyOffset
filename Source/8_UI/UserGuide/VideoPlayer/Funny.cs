@@ -26,10 +26,10 @@ internal class Funny : ReeUIComponentV2 {
     #region Image
 
     [UIComponent("container-component"), UsedImplicitly]
-    private RectTransform _container;
+    private RectTransform _container = default;
 
     [UIComponent("image-component"), UsedImplicitly]
-    private ImageView _imageComponent;
+    private ImageView _imageComponent = default;
 
     #endregion
 

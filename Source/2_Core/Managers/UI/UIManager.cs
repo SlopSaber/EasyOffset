@@ -7,8 +7,8 @@ namespace EasyOffset;
 
 [UsedImplicitly]
 internal class UIManager : IInitializable, IDisposable {
-    [Inject, UsedImplicitly] private HoverHintController _hoverHintController;
-    [Inject, UsedImplicitly] private SongPreviewPlayer _songPreviewPlayer;
+    [Inject, UsedImplicitly] private HoverHintController _hoverHintController = default;
+    [Inject, UsedImplicitly] private SongPreviewPlayer _songPreviewPlayer = default;
 
     public void Initialize() {
         UIEvents.HoverHintUpdatedEvent += _hoverHintController.HideHintInstant;

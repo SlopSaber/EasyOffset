@@ -63,10 +63,10 @@ internal class RewindSlider : ReeUIComponentV2 {
     #region Slider
 
     [UIComponent("slider-background"), UsedImplicitly]
-    private ImageView _sliderBackground;
+    private ImageView _sliderBackground = default;
 
     [UIComponent("slider-component"), UsedImplicitly]
-    private SliderSetting _sliderComponent;
+    private SliderSetting _sliderComponent = default;
 
     [UIAction("slider-formatter"), UsedImplicitly]
     private string SliderFormatter(float value) => string.Empty;

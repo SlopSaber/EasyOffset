@@ -21,8 +21,8 @@ public class PepegaSingletonFix<T> : MonoBehaviour, INotifyPropertyChanged where
             lock (_lock) {
                 if (_instance != null) return _instance;
 
-                _instance = (T)FindObjectOfType(typeof(T));
-                if (FindObjectsOfType(typeof(T)).Length > 1) {
+                _instance = (T)FindFirstObjectByType(typeof(T));
+                if (FindObjectsByType(typeof(T), FindObjectsSortMode.None).Length > 1) {
                     Debug.LogError("[Singleton] Something went really wrong  - there should never be more than 1 singleton! Reopenning the scene might fix it.");
                     return _instance;
                 }

@@ -1,21 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace EasyOffset {
     public class GizmosController : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Transform controllerTransform;
-        [SerializeField] private Transform saberTransform;
-        [SerializeField] private Transform pivotTransform;
-        [SerializeField] private Transform pivotPositionOnly;
-        [SerializeField] private Transform referenceRotationVisuals;
+        [SerializeField] private Transform controllerTransform = default;
+        [SerializeField] private Transform saberTransform = default;
+        [SerializeField] private Transform pivotTransform = default;
+        [SerializeField] private Transform pivotPositionOnly = default;
+        [SerializeField] private Transform referenceRotationVisuals = default;
 
-        [SerializeField] private Pivot pivot;
-        [SerializeField] private SphericalBasis sphericalBasis;
-        [SerializeField] private OrthonormalBasis orthonormalBasis;
-        [SerializeField] private ControllerModel controllerModel;
-        [SerializeField] private SwingPreview swingPreview;
-        [SerializeField] private PreciseGimbal preciseGimbal;
+        [SerializeField] private Pivot pivot = default;
+        [SerializeField] private SphericalBasis sphericalBasis = default;
+        [SerializeField] private OrthonormalBasis orthonormalBasis = default;
+        [SerializeField] private ControllerModel controllerModel = default;
+        [SerializeField] private SwingPreview swingPreview = default;
+        [SerializeField] private PreciseGimbal preciseGimbal = default;
 
         #endregion
 

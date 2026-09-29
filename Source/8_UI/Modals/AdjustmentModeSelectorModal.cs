@@ -33,13 +33,13 @@ internal class AdjustmentModeSelectorModal : ReeUIComponentV2 {
     #region Panels
 
     [UIComponent("left-panel"), UsedImplicitly]
-    private ImageView _leftPanel;
+    private ImageView _leftPanel = default;
 
     [UIComponent("middle-panel"), UsedImplicitly]
-    private ImageView _middlePanel;
+    private ImageView _middlePanel = default;
 
     [UIComponent("right-panel"), UsedImplicitly]
-    private ImageView _rightPanel;
+    private ImageView _rightPanel = default;
 
     private void InitializePanels() {
         _leftPanel.raycastTarget = true;
@@ -52,7 +52,7 @@ internal class AdjustmentModeSelectorModal : ReeUIComponentV2 {
     #region Modal
 
     [UIComponent("modal"), UsedImplicitly]
-    private ModalView _modal;
+    private ModalView _modal = default;
 
     private void InitializeModal() {
         var background = _modal.GetComponentInChildren<ImageView>();

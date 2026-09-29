@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -6,54 +5,59 @@ namespace EasyOffset {
     public class ControllerModel : MonoBehaviour {
         #region Serialized
 
-        [SerializeField]
-        private GameObject oculusCV1Left;
+        // Preserve the embedded prefab serialization layout while upstream controller meshes remain disabled.
+#pragma warning disable CS0414
 
         [SerializeField]
-        private GameObject oculusCV1Right;
+        private GameObject oculusCV1Left = default;
 
         [SerializeField]
-        private GameObject oculusQuest2Left;
+        private GameObject oculusCV1Right = default;
 
         [SerializeField]
-        private GameObject oculusQuest2Right;
+        private GameObject oculusQuest2Left = default;
 
         [SerializeField]
-        private GameObject riftSLeft;
+        private GameObject oculusQuest2Right = default;
 
         [SerializeField]
-        private GameObject riftSRight;
+        private GameObject riftSLeft = default;
 
         [SerializeField]
-        private GameObject valveIndexLeft;
+        private GameObject riftSRight = default;
 
         [SerializeField]
-        private GameObject valveIndexRight;
+        private GameObject valveIndexLeft = default;
 
         [SerializeField]
-        private GameObject pico4Left;
+        private GameObject valveIndexRight = default;
 
         [SerializeField]
-        private GameObject pico4Right;
+        private GameObject pico4Left = default;
 
         [SerializeField]
-        private GameObject piMaxSwordLeft;
+        private GameObject pico4Right = default;
 
         [SerializeField]
-        private GameObject piMaxSwordRight;
+        private GameObject piMaxSwordLeft = default;
 
         [SerializeField]
-        private GameObject viveTracker2;
+        private GameObject piMaxSwordRight = default;
 
         [SerializeField]
-        private GameObject viveTracker3;
+        private GameObject viveTracker2 = default;
 
         [SerializeField]
-        private GameObject tundraTracker;
+        private GameObject viveTracker3 = default;
 
         [SerializeField]
-        private GameObject vive;
+        private GameObject tundraTracker = default;
 
+        [SerializeField]
+        private GameObject vive = default;
+
+
+#pragma warning restore CS0414
         #endregion
 
         #region Properties
@@ -123,21 +127,8 @@ namespace EasyOffset {
 
         [CanBeNull]
         private GameObject GetPrefab(ControllerType controllerType, bool isLeft) {
+            // Upstream disabled controller meshes in 1.30.2. Keep serialized fields for bundle compatibility.
             return null;
-            switch (controllerType) {
-                case ControllerType.None: return null;
-                case ControllerType.ValveIndex: return isLeft ? valveIndexLeft : valveIndexRight;
-                case ControllerType.OculusQuest2: return isLeft ? oculusQuest2Left : oculusQuest2Right;
-                case ControllerType.OculusRiftS: return isLeft ? riftSLeft : riftSRight;
-                case ControllerType.OculusCV1: return isLeft ? oculusCV1Left : oculusCV1Right;
-                case ControllerType.HtcVive: return vive;
-                case ControllerType.Pico4: return isLeft ? pico4Left : pico4Right;
-                case ControllerType.PiMaxSword: return isLeft ? piMaxSwordLeft : piMaxSwordRight;
-                case ControllerType.ViveTracker2: return viveTracker2;
-                case ControllerType.ViveTracker3: return viveTracker3;
-                case ControllerType.TundraTracker: return tundraTracker;
-                default: throw new ArgumentOutOfRangeException(nameof(controllerType), controllerType, null);
-            }
         }
 
         #endregion

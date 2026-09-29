@@ -1,4 +1,4 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -35,7 +35,7 @@ internal class Signature : ReeUIComponentV2 {
     #region Components
 
     [UIComponent("text-component"), UsedImplicitly]
-    private ClickableText _textComponent;
+    private ClickableText _textComponent = default;
 
     private void InitializeText() {
         var hoverController = _textComponent.gameObject.AddComponent<SmoothHoverController>();

@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace EasyOffset {
     public class AngleIndicator : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Material material;
-        [SerializeField] private MeshRenderer meshRenderer;
-        [SerializeField] private Transform planeTransform;
-        [SerializeField] private IndicatorText indicatorText;
+        [SerializeField] private Material material = default;
+        [SerializeField] private MeshRenderer meshRenderer = default;
+        [SerializeField] private Transform planeTransform = default;
+        [SerializeField] private IndicatorText indicatorText = default;
         [SerializeField] private float armThickness = 0.001f;
         [SerializeField] private float radius = 1.0f;
         [SerializeField] private float lineRadius = 0.9f;

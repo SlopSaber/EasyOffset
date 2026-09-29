@@ -67,7 +67,7 @@ namespace EasyOffset {
         public static ConfigImportResult UniversalImport() {
             if (!IsMigrationPossible) return ConfigImportResult.DevicelessFail;
 
-            var menuPlayerController = Object.FindObjectOfType<MenuPlayerController>();
+            var menuPlayerController = Object.FindFirstObjectByType<MenuPlayerController>();
             if (menuPlayerController == null) return ConfigImportResult.InternalError;
 
             if (!ImportFromVRController(menuPlayerController.leftController, out var leftPivotPosition, out var leftSaberRotation)) {

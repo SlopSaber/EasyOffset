@@ -1,19 +1,19 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 
 namespace EasyOffset {
     public class SphericalBasis : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Material material;
-        [SerializeField] private MeshRenderer meshRenderer;
-        [SerializeField] private Transform sphereTransform;
+        [SerializeField] private Material material = default;
+        [SerializeField] private MeshRenderer meshRenderer = default;
+        [SerializeField] private Transform sphereTransform = default;
 
-        [SerializeField] private Transform textRoot;
-        [SerializeField] private TextMeshPro xText;
-        [SerializeField] private TextMeshPro yText;
-        [SerializeField] private TextMeshPro balanceText;
-        [SerializeField] private TextMeshPro curveText;
+        [SerializeField] private Transform textRoot = default;
+        [SerializeField] private TextMeshPro xText = default;
+        [SerializeField] private TextMeshPro yText = default;
+        [SerializeField] private TextMeshPro balanceText = default;
+        [SerializeField] private TextMeshPro curveText = default;
 
         #endregion
 

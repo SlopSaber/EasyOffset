@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BeatSaberMarkupLanguage.Attributes;
@@ -63,13 +63,13 @@ namespace EasyOffset {
 
         #region ZOffset slider
 
-        [UIValue("zo-hint"), UsedImplicitly]  private string _zOffsetSliderHint = "Pivot point offset along saber axis (cm)\n0 - top of the hilt, 17 - bottom of the hilt";
+        [UIValue("zo-hint"), UsedImplicitly]  private string _zOffsetSliderHint { get; } = "Pivot point offset along saber axis (cm)\n0 - top of the hilt, 17 - bottom of the hilt";
 
-        [UIValue("zo-min"), UsedImplicitly]  private float _zOffsetSliderMin = -15f;
+        [UIValue("zo-min"), UsedImplicitly]  private float _zOffsetSliderMin { get; } = -15f;
 
-        [UIValue("zo-max"), UsedImplicitly]  private float _zOffsetSliderMax = 25f;
+        [UIValue("zo-max"), UsedImplicitly]  private float _zOffsetSliderMax { get; } = 25f;
 
-        [UIValue("zo-increment"), UsedImplicitly]  private float _zOffsetSliderIncrement = 0.5f;
+        [UIValue("zo-increment"), UsedImplicitly]  private float _zOffsetSliderIncrement { get; } = 0.5f;
 
 
         [UIValue("zo-value"), UsedImplicitly]

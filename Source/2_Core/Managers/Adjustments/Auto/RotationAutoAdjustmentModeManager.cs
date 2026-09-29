@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.XR;
 
 namespace EasyOffset {
     [UsedImplicitly]
@@ -29,7 +28,7 @@ namespace EasyOffset {
         ) {
             _gizmosManager = gizmosManager;
 
-            var capacity = (int)Mathf.Clamp(XRDevice.refreshRate * ProbeTime, MinimalCapacity, MaximalCapacity);
+            var capacity = (int)Mathf.Clamp(XRUtils.GetRefreshRate() * ProbeTime, MinimalCapacity, MaximalCapacity);
             _measurements = new WeightedList<Vector3>(capacity);
         }
 

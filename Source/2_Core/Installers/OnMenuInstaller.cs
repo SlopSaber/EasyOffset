@@ -4,7 +4,7 @@ using Zenject;
 namespace EasyOffset.Installers {
     [UsedImplicitly]
     public class OnMenuInstaller : Installer<OnMenuInstaller> {
-        [Inject] [UsedImplicitly] private MenuPlayerController _menuPlayerController;
+        [Inject] [UsedImplicitly] private MenuPlayerController _menuPlayerController = default;
 
         public override void InstallBindings() {
             BindInputManager();

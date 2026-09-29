@@ -5,7 +5,7 @@ namespace EasyOffset {
     internal class ReeTrail : AbstractComputeTrail {
         #region Serialized
 
-        [SerializeField] private float dotOffset;
+        [SerializeField] private float dotOffset = default;
         [SerializeField] private bool isTracking = true;
         [SerializeField] private bool resetOnEnable = true;
 

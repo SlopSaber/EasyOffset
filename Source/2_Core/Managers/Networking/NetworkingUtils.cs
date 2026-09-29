@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -16,14 +16,14 @@ namespace EasyOffset {
             for (var i = 1; i <= retries; i++) {
                 requestHandler.OnRequestStarted();
 
-                var request = requestDescriptor.CreateWebRequest();
+                using var request = requestDescriptor.CreateWebRequest();
                 if (timeoutSeconds > 0) request.timeout = timeoutSeconds;
 
                 Plugin.Log.Debug($"Request[{request.GetHashCode()}]: {request.url}");
                 yield return AwaitRequestWithProgress(request, requestHandler);
                 Plugin.Log.Debug($"Response[{request.GetHashCode()}]: {request.error ?? request.responseCode.ToString()}");
 
-                if (request.isHttpError || request.isNetworkError) {
+                if (request.result != UnityWebRequest.Result.Success) {
                     requestHandler.OnRequestFailed($"HTTP/Network error: {request.error} {request.downloadHandler?.text}");
                     continue; //retry
                 }

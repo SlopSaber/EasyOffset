@@ -183,7 +183,7 @@ internal class SmoothSlider : ReeUIComponentV2 {
 
     #region SliderComponent
 
-    [UIComponent("slider-component"), UsedImplicitly] private SliderSetting _sliderComponent;
+    [UIComponent("slider-component"), UsedImplicitly] private SliderSetting _sliderComponent = default;
 
     [UIAction("slider-formatter"), UsedImplicitly]
     private string SliderFormatter(float value) {

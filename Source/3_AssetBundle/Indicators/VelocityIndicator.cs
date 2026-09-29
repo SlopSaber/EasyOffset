@@ -4,14 +4,14 @@ namespace EasyOffset {
     public class VelocityIndicator : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Material pointMaterial;
-        [SerializeField] private MeshRenderer pointMeshRenderer;
+        [SerializeField] private Material pointMaterial = default;
+        [SerializeField] private MeshRenderer pointMeshRenderer = default;
 
-        [SerializeField] private Color minimalVelocityColor;
-        [SerializeField] private Color maximalVelocityColor;
+        [SerializeField] private Color minimalVelocityColor = default;
+        [SerializeField] private Color maximalVelocityColor = default;
 
-        [SerializeField] private float minimalVelocity;
-        [SerializeField] private float maximalVelocity;
+        [SerializeField] private float minimalVelocity = default;
+        [SerializeField] private float maximalVelocity = default;
 
         [SerializeField] private float smoothFactor = 10f;
 

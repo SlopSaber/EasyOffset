@@ -4,19 +4,19 @@ namespace EasyOffset {
     public class SwingIndicators : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Transform swingPlaneTransform;
-        [SerializeField] private Material swingPlaneMaterial;
-        [SerializeField] private MeshRenderer swingPlaneMeshRenderer;
+        [SerializeField] private Transform swingPlaneTransform = default;
+        [SerializeField] private Material swingPlaneMaterial = default;
+        [SerializeField] private MeshRenderer swingPlaneMeshRenderer = default;
 
-        [SerializeField] private DistanceIndicator tipDeviationIndicator;
-        [SerializeField] private DistanceIndicator pivotDeviationIndicator;
-        [SerializeField] private AngleIndicator swingCurveAngleIndicator;
-        [SerializeField] private AngleIndicator minimalSwingAngleIndicator;
-        [SerializeField] private AngleIndicator maximalSwingAngleIndicator;
-        [SerializeField] private AngleIndicator fullSwingAngleIndicator;
+        [SerializeField] private DistanceIndicator tipDeviationIndicator = default;
+        [SerializeField] private DistanceIndicator pivotDeviationIndicator = default;
+        [SerializeField] private AngleIndicator swingCurveAngleIndicator = default;
+        [SerializeField] private AngleIndicator minimalSwingAngleIndicator = default;
+        [SerializeField] private AngleIndicator maximalSwingAngleIndicator = default;
+        [SerializeField] private AngleIndicator fullSwingAngleIndicator = default;
 
-        [SerializeField] private Vector2 normalTextOffset;
-        [SerializeField] private Vector2 flippedTextOffset;
+        [SerializeField] private Vector2 normalTextOffset = default;
+        [SerializeField] private Vector2 flippedTextOffset = default;
 
         #endregion
 

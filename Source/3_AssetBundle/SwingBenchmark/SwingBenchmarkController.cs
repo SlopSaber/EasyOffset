@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace EasyOffset {
     public class SwingBenchmarkController : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private ReeTrail trail;
-        [SerializeField] private SwingIndicators swingIndicators;
+        [SerializeField] private ReeTrail trail = default;
+        [SerializeField] private SwingIndicators swingIndicators = default;
 
         #endregion
 

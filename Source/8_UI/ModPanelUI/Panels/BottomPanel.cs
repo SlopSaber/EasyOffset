@@ -41,8 +41,8 @@ internal class BottomPanel : ReeUIComponentV2 {
 
     #region Scale
 
-    [UIComponent("undo-redo-buttons-container"), UsedImplicitly] private RectTransform _undoRedoButtonsContainer;
-    [UIComponent("ui-lock-container"), UsedImplicitly] private RectTransform _uiLockContainer;
+    [UIComponent("undo-redo-buttons-container"), UsedImplicitly] private RectTransform _undoRedoButtonsContainer = default;
+    [UIComponent("ui-lock-container"), UsedImplicitly] private RectTransform _uiLockContainer = default;
 
     private static readonly Vector3 UILockScale = Vector3.one * 0.85f;
     private static readonly Vector3 UndoRedoScale = Vector3.one * 0.95f;

@@ -127,7 +127,7 @@ internal class TopPanel : ReeUIComponentV2 {
     #endregion
 
     [UIComponent("ab-component")] [UsedImplicitly]
-    private DropDownListSetting _assignedButtonComponent;
+    private DropDownListSetting _assignedButtonComponent = default;
 
     [UIValue("ab-choices")] [UsedImplicitly]
     private List<object> _assignedButtonChoices;

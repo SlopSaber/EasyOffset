@@ -60,7 +60,7 @@ internal class NonePanel : ReeUIComponentV2 {
     #region Guide
 
     [UIValue("none-panel-guide-text"), UsedImplicitly]
-    private string _nonePanelText = "Select your controller in the \"Controller Type\" list" +
+    private string _nonePanelText { get; } = "Select your controller in the \"Controller Type\" list" +
                                     "\nChoose a button you can press without changing your grip" +
                                     "\nHold the selected button and move your hand to make changes" +
                                     "\nEffect depends on a selected Adjustment Mode";

@@ -121,13 +121,13 @@ public class UserGuideViewController : BSMLAutomaticViewController {
     #region Panels
 
     [UIComponent("header-panel"), UsedImplicitly]
-    private ImageView _headerPanel;
+    private ImageView _headerPanel = default;
 
     [UIComponent("content-panel"), UsedImplicitly]
-    private ImageView _contentPanel;
+    private ImageView _contentPanel = default;
 
     [UIComponent("player-panel"), UsedImplicitly]
-    private RectTransform _playerPanel;
+    private RectTransform _playerPanel = default;
 
     private void InitializePanels() {
         _headerPanel.raycastTarget = true;

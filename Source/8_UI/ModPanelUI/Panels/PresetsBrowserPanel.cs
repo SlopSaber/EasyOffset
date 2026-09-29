@@ -73,7 +73,7 @@ internal class PresetsBrowserPanel : ReeUIComponentV2 {
     private List<StoredConfigPreset> _storedConfigPresets = new();
 
     [UIComponent("pb-list"), UsedImplicitly]
-    private CustomListTableData _presetsBrowserList;
+    private CustomListTableData _presetsBrowserList = default;
 
     [UIAction("pb-list-select-cell"), UsedImplicitly]
     private void PresetsBrowserListSelectCell(TableView tableView, int row) {
@@ -116,7 +116,7 @@ internal class PresetsBrowserPanel : ReeUIComponentV2 {
     #region Save button
 
     [UIValue("pb-save-hint"), UsedImplicitly]
-    private string _presetsBrowserSaveHint = "Save current preset to file" +
+    private string _presetsBrowserSaveHint { get; } = "Save current preset to file" +
                                              "\n" +
                                              "\n<color=red>This action will overwrite existing files</color>";
 
@@ -145,7 +145,7 @@ internal class PresetsBrowserPanel : ReeUIComponentV2 {
     private bool _presetsBrowserLoadActive;
 
     [UIValue("pb-load-hint"), UsedImplicitly]
-    private string _presetsBrowserLoadHint = "Load preset from file" +
+    private string _presetsBrowserLoadHint { get; } = "Load preset from file" +
                                              "\n" +
                                              "\n<color=red>Any unsaved changes will be lost</color>";
 

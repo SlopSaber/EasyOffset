@@ -9,10 +9,10 @@ internal class DownloadProgress : ReeUIComponentV2 {
     #region Components
 
     [UIComponent("container-component"), UsedImplicitly]
-    private RectTransform _container;
+    private RectTransform _container = default;
 
     [UIComponent("text-component"), UsedImplicitly]
-    private TextMeshProUGUI _textComponent;
+    private TextMeshProUGUI _textComponent = default;
 
     private void UpdateText() {
         _textComponent.text = $"{Label} {Progress * 100.0f:F0}<size=60%>%";

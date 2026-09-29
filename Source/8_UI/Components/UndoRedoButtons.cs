@@ -105,7 +105,7 @@ internal class UndoRedoButtons : ReeUIComponentV2 {
 
     #region Undo button
 
-    [UIComponent("undo-button"), UsedImplicitly] private Button _undoButton;
+    [UIComponent("undo-button"), UsedImplicitly] private Button _undoButton = default;
 
     private bool _undoButtonInteractable;
 
@@ -141,7 +141,7 @@ internal class UndoRedoButtons : ReeUIComponentV2 {
 
     #region Redo button
 
-    [UIComponent("redo-button"), UsedImplicitly] private Button _redoButton;
+    [UIComponent("redo-button"), UsedImplicitly] private Button _redoButton = default;
 
     private bool _redoButtonInteractable;
 

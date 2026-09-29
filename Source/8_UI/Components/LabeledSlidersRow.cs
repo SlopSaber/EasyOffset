@@ -65,7 +65,7 @@ internal class LabeledSlidersRow : ReeUIComponentV2 {
     #region LabelComponent
 
     [UIComponent("label-component"), UsedImplicitly]
-    private TextMeshProUGUI _labelComponent;
+    private TextMeshProUGUI _labelComponent = default;
 
     #endregion
 }

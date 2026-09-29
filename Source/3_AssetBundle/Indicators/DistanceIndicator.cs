@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace EasyOffset {
     public class DistanceIndicator : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Material material;
-        [SerializeField] private MeshRenderer planeMeshRenderer;
-        [SerializeField] private Transform planeTransform;
-        [SerializeField] private IndicatorText indicatorText;
+        [SerializeField] private Material material = default;
+        [SerializeField] private MeshRenderer planeMeshRenderer = default;
+        [SerializeField] private Transform planeTransform = default;
+        [SerializeField] private IndicatorText indicatorText = default;
 
         [SerializeField] private float planeWidth = 1;
-        [SerializeField] private float lineMargin;
+        [SerializeField] private float lineMargin = default;
 
         [SerializeField] private bool flipTextPosition;
 

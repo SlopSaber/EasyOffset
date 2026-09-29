@@ -68,7 +68,7 @@ internal class ModPanelUI : PepegaSingletonFix<ModPanelUI> {
     #region Visibility
 
     [UIObject("root"), UsedImplicitly]
-    private GameObject _root;
+    private GameObject _root = default;
 
     [UIAction("#post-parse"), UsedImplicitly]
     private void OnAfterParse() {

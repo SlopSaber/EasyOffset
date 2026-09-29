@@ -75,7 +75,7 @@ internal class SlidersPanel : ReeUIComponentV2 {
 
 
     [UIComponent("container"), UsedImplicitly]
-    private RectTransform _container;
+    private RectTransform _container = default;
 
     private void SetScaleAndOffset(Vector3 scale, Vector3 offset) {
         _container.localScale = scale;

@@ -4,12 +4,12 @@ namespace EasyOffset {
     public class PreciseGimbal : MonoBehaviour {
         #region Serialized
 
-        [SerializeField] private Transform gimbalRingXTransform;
-        [SerializeField] private Transform gimbalRingYTransform;
-        [SerializeField] private Material gimbalRingXMaterial;
-        [SerializeField] private Material gimbalRingYMaterial;
-        [SerializeField] private MeshRenderer gimbalRingXMeshRenderer;
-        [SerializeField] private MeshRenderer gimbalRingYMeshRenderer;
+        [SerializeField] private Transform gimbalRingXTransform = default;
+        [SerializeField] private Transform gimbalRingYTransform = default;
+        [SerializeField] private Material gimbalRingXMaterial = default;
+        [SerializeField] private Material gimbalRingYMaterial = default;
+        [SerializeField] private MeshRenderer gimbalRingXMeshRenderer = default;
+        [SerializeField] private MeshRenderer gimbalRingYMeshRenderer = default;
 
         #endregion
 
