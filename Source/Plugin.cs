@@ -1,4 +1,4 @@
-﻿using IPA;
+using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
 using JetBrains.Annotations;
@@ -46,7 +46,9 @@ namespace EasyOffset {
         #region OnApplicationQuit
 
         [OnExit, UsedImplicitly]
-        public void OnApplicationQuit() { }
+        public void OnApplicationQuit() {
+            OwnedFileWork.Stop();
+        }
 
         #endregion
     }

@@ -9,8 +9,19 @@ namespace EasyOffset {
 
         public static bool ReadPresetFromFile(string filePath, out IConfigPreset configPreset) {
             try {
-                var rawFileString = File.ReadAllText(filePath);
+                string rawFileString;
+                lock (OwnedFileWork.FileGate) rawFileString = File.ReadAllText(filePath);
                 var jObject = JObject.Parse(rawFileString);
+                configPreset = ParsePresetFromJson(jObject);
+                return true;
+            } catch (Exception) {
+                configPreset = null;
+                return false;
+            }
+        }
+
+        internal static bool ReadPresetFromJson(JObject jObject, out IConfigPreset configPreset) {
+            try {
                 configPreset = ParsePresetFromJson(jObject);
                 return true;
             } catch (Exception) {
@@ -36,7 +47,8 @@ namespace EasyOffset {
         public static bool WritePresetToFile(string filePath, IConfigPreset configPreset) {
             try {
                 var jObject = configPreset.Serialize();
-                File.WriteAllText(filePath, jObject.ToString(), Encoding.UTF8);
+                var text = jObject.ToString();
+                lock (OwnedFileWork.FileGate) File.WriteAllText(filePath, text, Encoding.UTF8);
                 return true;
             } catch (Exception) {
                 return false;

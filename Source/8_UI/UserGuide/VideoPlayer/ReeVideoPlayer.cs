@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using BeatSaberMarkupLanguage.Attributes;
 using HMUI;
 using JetBrains.Annotations;
@@ -40,8 +41,11 @@ internal class ReeVideoPlayer : ReeUIComponentV2, IWebRequestHandler<string> {
 
     private VideoRenderer _videoRenderer;
     private HoverController _hoverController;
+    private CancellationTokenSource _videoRequest;
+    private bool _disposed;
 
     protected override void OnInitialize() {
+        _disposed = false;
         _videoRenderer = VideoRenderer.FromImageView(_screen);
         _hoverController = _hoverArea.gameObject.AddComponent<HoverController>();
         _hoverController.HoverStateChangedEvent += OnHoverStateChanged;
@@ -53,6 +57,8 @@ internal class ReeVideoPlayer : ReeUIComponentV2, IWebRequestHandler<string> {
     }
 
     protected override void OnDispose() {
+        _disposed = true;
+        RetireVideoRequest();
         _hoverController.HoverStateChangedEvent -= OnHoverStateChanged;
         _videoRenderer.OnTimeUpdated -= OnVideoTimeUpdated;
         _videoRenderer.OnVideoEnded -= OnVideoEnded;
@@ -67,11 +73,50 @@ internal class ReeVideoPlayer : ReeUIComponentV2, IWebRequestHandler<string> {
     private bool _isFunny;
 
     public void SetVideo(string key, string url, bool isFunny) {
+        RetireVideoRequest();
         _isFunny = isFunny;
         _videoRenderer.Stop();
         StopAllCoroutines();
         SetState(State.Uninitialized);
-        StartCoroutine(VideoCache.GetVideoCoroutine(key, url, this));
+        var source = _videoRequest = new CancellationTokenSource();
+        StartCoroutine(VideoCache.GetVideoCoroutine(key, url, new CurrentRequestHandler(this, source), source.Token));
+    }
+
+    private void OnDisable() => RetireVideoRequest();
+
+    private void Update() {
+        if (_videoRequest != null && (_disposed || OwnedFileWork.IsStopping || !_screen || !_screen.gameObject.activeInHierarchy))
+            RetireVideoRequest();
+    }
+
+    private void RetireVideoRequest() {
+        _videoRequest?.Cancel();
+        _videoRequest?.Dispose();
+        _videoRequest = null;
+        StopAllCoroutines();
+    }
+
+    private sealed class CurrentRequestHandler : IWebRequestHandler<string> {
+        private readonly ReeVideoPlayer _owner;
+        private readonly CancellationTokenSource _source;
+        private readonly CancellationToken _token;
+
+        internal CurrentRequestHandler(ReeVideoPlayer owner, CancellationTokenSource source) {
+            _owner = owner;
+            _source = source;
+            _token = source.Token;
+        }
+
+        private bool IsCurrent => _owner && !_owner._disposed && ReferenceEquals(_owner._videoRequest, _source) &&
+            !_token.IsCancellationRequested && !OwnedFileWork.IsStopping && _owner.isActiveAndEnabled &&
+            _owner._screen && _owner._screen.gameObject.activeInHierarchy;
+
+        public void OnRequestStarted() { if (IsCurrent) _owner.OnRequestStarted(); }
+        public void OnRequestFinished(string result) { if (IsCurrent) _owner.OnRequestFinished(result); }
+        public void OnRequestFailed(string reason) { if (IsCurrent) _owner.OnRequestFailed(reason); }
+        public void OnRequestProgress(float uploadProgress, float downloadProgress, float overallProgress) {
+            if (IsCurrent) _owner.OnRequestProgress(uploadProgress, downloadProgress, overallProgress);
+        }
     }
 
     #endregion
