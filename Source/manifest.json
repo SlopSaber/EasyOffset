@@ -7,7 +7,7 @@
   "description": "Easy controller offset adjustment tool",
   "gameVersion": "1.45.3",
   "dependsOn": {
-    "BSIPA": "^4.3.5",
+    "BSIPA": "^5.0.0",
     "BeatSaberMarkupLanguage": "^1.12.5",
     "SiraUtil": "^3.1.14"
   },
