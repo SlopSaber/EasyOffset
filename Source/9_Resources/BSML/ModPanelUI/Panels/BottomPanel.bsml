@@ -11,7 +11,7 @@
     </macro.as-host>
     
     <vertical preferred-width="5">
-        <clickable-image active="~interactable" src="#TutorialIcon" pref-height="5" preserve-aspect="true"
+        <clickable-text active="~interactable" text="?" font-size="5" pref-height="5"
                          on-click="user-guide-on-click" hover-hint="User Guide"/>
     </vertical>
 
