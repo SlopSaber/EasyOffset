@@ -1,6 +1,7 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.XR;
 using Zenject;
 using Object = UnityEngine.Object;
 
@@ -11,6 +12,14 @@ namespace EasyOffset {
 
         public GizmosController LeftHandGizmosController;
         public GizmosController RightHandGizmosController;
+
+        private readonly IVRPlatformHelper _vrPlatformHelper;
+        private readonly IXRSystemState _xrSystemState;
+
+        public GizmosManager(IVRPlatformHelper vrPlatformHelper, IXRSystemState xrSystemState) {
+            _vrPlatformHelper = vrPlatformHelper;
+            _xrSystemState = xrSystemState;
+        }
 
         public void Initialize() {
             LeftHandGizmosController = Object.Instantiate(BundleLoader.GizmosController).GetComponent<GizmosController>();
@@ -23,6 +32,7 @@ namespace EasyOffset {
             PluginConfig.HideControllersChangedEvent += OnHideControllersChanged;
             PluginConfig.AdjustmentModeChangedEvent += OnAdjustmentModeChanged;
             PluginConfig.ControllerTypeChangedEvent += OnControllerTypeChanged;
+            PluginConfig.IsModPanelVisibleChangedEvent += OnModPanelVisibleChanged;
             Abomination.TransformsUpdatedEvent += OnControllerTransformsChanged;
             PluginConfig.ConfigWasChangedEvent += OnConfigWasChanged;
             DirectAdjustmentModeManager.DirectChangeStartedEvent += OnDirectChangeStarted;
@@ -30,9 +40,11 @@ namespace EasyOffset {
 
             OnControllerTypeChanged(PluginConfig.SelectedControllerType);
             OnConfigWasChanged();
+            _xrSystemState.AddListener(OnXRSystemStateChanged);
         }
 
         public void Dispose() {
+            _xrSystemState.RemoveListener(OnXRSystemStateChanged);
             PluginConfig.IsInMainMenuChangedEvent -= OnIsInMainMenuChanged;
             PluginConfig.HideControllersChangedEvent -= OnHideControllersChanged;
             PluginConfig.AdjustmentModeChangedEvent -= OnAdjustmentModeChanged;
@@ -125,7 +137,6 @@ namespace EasyOffset {
         }
 
         private void OnModPanelVisibleChanged(bool value) {
-            if (!value) return;
             UpdateVisibility();
         }
 
@@ -142,9 +153,30 @@ namespace EasyOffset {
         }
 
         private void OnControllerTypeChanged(ControllerType controllerType) {
+            UpdateControllerModelOffsets();
             LeftHandGizmosController.SetControllerType(controllerType);
             RightHandGizmosController.SetControllerType(controllerType);
             UpdateVisibility();
+        }
+
+        private void OnXRSystemStateChanged(XRSystemEventType eventType) {
+            if (eventType == XRSystemEventType.ControllersDidChangeReference ||
+                eventType == XRSystemEventType.ControllersDidDisconnect)
+                UpdateControllerModelOffsets();
+        }
+
+        private void UpdateControllerModelOffsets() {
+            if (PluginConfig.SelectedControllerType == ControllerType.None) return;
+
+            // Bundle meshes use legacy device origins; gizmos follow the current raw XR pose.
+            // The helper returns right-hand offsets for both nodes, as VRController expects.
+            var left = _vrPlatformHelper.GetRootPositionOffsetForLegacyNodePose(XRNode.LeftHand);
+            var right = _vrPlatformHelper.GetRootPositionOffsetForLegacyNodePose(XRNode.RightHand);
+            left.position = TransformUtils.MirrorVector(left.position);
+            left.rotation = TransformUtils.MirrorRotation(left.rotation);
+            LeftHandGizmosController.SetControllerModelOffset(left);
+            RightHandGizmosController.SetControllerModelOffset(right);
+            Plugin.Log.Info($"Controller model origins: {PluginConfig.SelectedControllerType}, left={left}, right={right}");
         }
 
         #endregion

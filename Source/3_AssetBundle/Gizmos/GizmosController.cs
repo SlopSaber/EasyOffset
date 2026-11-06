@@ -147,6 +147,10 @@ namespace EasyOffset {
             controllerModel.ControllerType = controllerType;
         }
 
+        public void SetControllerModelOffset(Pose pose) {
+            controllerModel.SetPoseOffset(pose);
+        }
+
         #endregion
     }
 }

@@ -5,9 +5,6 @@ namespace EasyOffset {
     public class ControllerModel : MonoBehaviour {
         #region Serialized
 
-        // Preserve the embedded prefab serialization layout while upstream controller meshes remain disabled.
-#pragma warning disable CS0414
-
         [SerializeField]
         private GameObject oculusCV1Left = default;
 
@@ -57,7 +54,6 @@ namespace EasyOffset {
         private GameObject vive = default;
 
 
-#pragma warning restore CS0414
         #endregion
 
         #region Properties
@@ -102,6 +98,10 @@ namespace EasyOffset {
             gameObject.SetActive(value);
         }
 
+        public void SetPoseOffset(Pose pose) {
+            transform.SetLocalPositionAndRotation(pose.position, pose.rotation);
+        }
+
         #endregion
 
         #region Instance
@@ -127,8 +127,20 @@ namespace EasyOffset {
 
         [CanBeNull]
         private GameObject GetPrefab(ControllerType controllerType, bool isLeft) {
-            // Upstream disabled controller meshes in 1.30.2. Keep serialized fields for bundle compatibility.
-            return null;
+            return controllerType switch {
+                ControllerType.None => null,
+                ControllerType.ValveIndex => isLeft ? valveIndexLeft : valveIndexRight,
+                ControllerType.OculusQuest2 => isLeft ? oculusQuest2Left : oculusQuest2Right,
+                ControllerType.OculusRiftS => isLeft ? riftSLeft : riftSRight,
+                ControllerType.OculusCV1 => isLeft ? oculusCV1Left : oculusCV1Right,
+                ControllerType.HtcVive => vive,
+                ControllerType.Pico4 => isLeft ? pico4Left : pico4Right,
+                ControllerType.PiMaxSword => isLeft ? piMaxSwordLeft : piMaxSwordRight,
+                ControllerType.ViveTracker2 => viveTracker2,
+                ControllerType.ViveTracker3 => viveTracker3,
+                ControllerType.TundraTracker => tundraTracker,
+                _ => null
+            };
         }
 
         #endregion
